@@ -24,6 +24,30 @@ const getGenres = async () => {
 
 };
 
+
+const getReview = async (review)=>{
+  const  reviewID = review.id;
+  const castEndPoint = '/search/'+reviewID;
+  const requestParams = "?api_key=" +tmdbKey;
+  const urlToFetch = tmdbBaseUrl + castEndPoint + requestParams;
+
+  try{
+
+    const response = await fetch(urlToFetch);
+    if(response.ok){
+      const jsonResponse = await response.json();
+     console.log(jsonResponse);
+      return jsonResponse;
+    }
+
+  }catch(error){
+
+    console.log("rrr"+error);
+
+  }
+}
+
+
 const getMovies = async () => {
   const selectedGenre = getSelectedGenre();
   const discoverMovieEndpoint = '/discover/movie';
@@ -44,6 +68,9 @@ const getMovies = async () => {
   }
 
 };
+
+
+
 
 const getMovieInfo = async (movie) => {
   const movieId  = movie.id ;
@@ -77,7 +104,11 @@ const showRandomMovie = async () => {
 const movie = await getMovies();
 const randomMovie = getRandomMovie(movie);
 const info = await getMovieInfo(randomMovie);
+const info2 = await getReview(randomMovie)
+
+
 displayMovie(info);
+displayMovie(info2);
 };
 
 getGenres().then(populateGenreDropdown);

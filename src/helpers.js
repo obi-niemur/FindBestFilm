@@ -26,8 +26,10 @@ const showBtns = () => {
 const clearCurrentMovie = () => {
     const moviePosterDiv = document.getElementById('moviePoster');
     const movieTextDiv = document.getElementById('movieText');
+    const moviecastDiv = document.getElementById('casts');
     moviePosterDiv.innerHTML = '';
     movieTextDiv.innerHTML = '';
+    moviecastDiv.innerHTML = '';
 }
 
 // After liking a movie, clears the current movie from the screen and gets another random movie
@@ -71,6 +73,14 @@ const createMovieOverview = (overview) => {
     return overviewParagraph;
 };
 
+const cast = (name) =>{
+    const castName = document.createElement('p');
+    castName.setAttribute('id', 'castNames');
+    castName.innerHTML = name;
+    return castName;
+
+}
+
 // Returns a random movie from the first page of movies
 const getRandomMovie = (movies) => {
     const randomIndex = Math.floor(Math.random() * movies.length);
@@ -82,6 +92,7 @@ const getRandomMovie = (movies) => {
 const displayMovie = (movieInfo) => {
     const moviePosterDiv = document.getElementById('moviePoster');
     const movieTextDiv = document.getElementById('movieText');
+    const castDiv = document.getElementById('casts');
     const likeBtn = document.getElementById('likeBtn');
     const dislikeBtn = document.getElementById('dislikeBtn');
   
@@ -89,11 +100,13 @@ const displayMovie = (movieInfo) => {
     const moviePoster = createMoviePoster(movieInfo.poster_path);
     const titleHeader = createMovieTitle(movieInfo.title);
     const overviewText = createMovieOverview(movieInfo.overview);
+    const castText = cast(movieInfo.cast);
   
     // Append title, poster, and overview to page
     moviePosterDiv.appendChild(moviePoster);
     movieTextDiv.appendChild(titleHeader);
     movieTextDiv.appendChild(overviewText);
+    castDiv.appendChild(castText);
   
     showBtns();
     likeBtn.onclick = likeMovie;
